@@ -1,12 +1,8 @@
-import React from 'react';
+ import React, { useState } from 'react';
 
-function AlphabetActivity() {
-  return (
-    <div>
-      <h2>Alphabet Learning Activity</h2>
-      <p>Here kids will learn alphabets interactively!</p>
-    </div>
-  );
-}
+ function AlphabetActivity() {
+ };
 
-export default AlphabetActivity;
+
+ export default AlphabetActivity;
+
