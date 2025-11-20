@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-// Tailwind styles applied via classNames
 
 function shuffle(array) {
   const copy = array.slice();

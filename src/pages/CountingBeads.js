@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-// Tailwind styles applied via classNames
 
 function CountingBeads() {
   const [target, setTarget] = useState(() => Math.floor(Math.random() * 5) + 1);

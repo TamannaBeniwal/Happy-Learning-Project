@@ -99,7 +99,7 @@ const SignUp = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>📝 Sign Up</h2>
+        <h2>Sign Up</h2>
 
         {/* Role Toggle */}
         <div className="role-toggle">

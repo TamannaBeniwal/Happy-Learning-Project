@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="welcome-card">
-        <h1>🎓 Welcome to <span className="brand">Happy Learning!</span></h1>
+        <h1> Welcome to <span className="brand">Happy Learning!</span></h1>
         <p className="subtitle">Fun learning for ages 0–7</p>
         <button className="start-button" onClick={handleStart}>
           Let's Start!
