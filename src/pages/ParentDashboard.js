@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import './ParentDashboard.css';
 
 function ParentDashboard() {
-  const { parentInfo, childInfo, logout } = useAuth();
+  const { parentInfo, childInfo, logout: localLogout } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const progress = {
     lessonsCompleted: 12,
@@ -11,9 +12,38 @@ function ParentDashboard() {
     badgesEarned: 5,
   };
 
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Optionally, include token if your backend requires it
+          // 'Authorization': `Bearer ${parentInfo.token}`
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message || 'Logout successful.');
+        localLogout(); // Clear auth data in context
+      } else {
+        alert(`Error: ${data.message || 'Logout failed'}`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Logout failed. Check console for details.');
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="parent-dashboard">
-      <button onClick={logout} className="logout-btn">Logout</button>
+      <button onClick={handleLogout} className="logout-btn" disabled={loading}>
+        {loading ? 'Logging out...' : 'Logout'}
+      </button>
 
       <h2>👩‍👧 Welcome, {parentInfo?.name || 'Parent'}!</h2>
 
@@ -40,7 +70,11 @@ function ParentDashboard() {
 
       <div className="info-box">
         <h3>📝 Feedback & Suggestions</h3>
-        <textarea placeholder="Write your feedback here..." rows="4" style={{ width: '100%', padding: '10px', fontSize: '16px' }}></textarea>
+        <textarea
+          placeholder="Write your feedback here..."
+          rows="4"
+          style={{ width: '100%', padding: '10px', fontSize: '16px' }}
+        ></textarea>
         <button className="feedback-btn">Submit Feedback</button>
       </div>
     </div>

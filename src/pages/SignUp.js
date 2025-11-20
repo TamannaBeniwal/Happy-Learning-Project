@@ -6,12 +6,12 @@ const SignUp = () => {
   const [isParent, setIsParent] = useState(true);
   const navigate = useNavigate();
 
-  // Shared password field
+  // Shared password
   const [password, setPassword] = useState('');
 
   // Parent fields
-  const [fatherNameP, setFatherNameP] = useState('');
-  const [motherNameP, setMotherNameP] = useState('');
+  const [parentType, setParentType] = useState('Father'); // Father or Mother
+  const [parentName, setParentName] = useState('');
   const [childNameP, setChildNameP] = useState('');
   const [childAgeP, setChildAgeP] = useState('');
 
@@ -21,22 +21,79 @@ const SignUp = () => {
   const [motherNameC, setMotherNameC] = useState('');
   const [childOnlyAge, setChildOnlyAge] = useState('');
 
-  const handleRegister = () => {
+  // Loading state
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async () => {
+    setLoading(true);
+
     if (isParent) {
-      if (fatherNameP && motherNameP && childNameP && childAgeP && password) {
-        alert(`Parent Registered!\nFather: ${fatherNameP}\nMother: ${motherNameP}\nChild: ${childNameP}, Age: ${childAgeP}`);
-        navigate('/login');
-      } else {
+      if (!parentName || !childNameP || !childAgeP || !password) {
         alert('Please fill in all Parent fields.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/signup/parent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: parentType.toLowerCase(),
+            parentName,
+            childName: childNameP,
+            childAge: parseInt(childAgeP),
+            password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('Parent registered successfully!');
+          navigate('/login');
+        } else {
+          alert(`Error: ${data.message || 'Something went wrong!'}`);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to register parent. Check console for details.');
       }
     } else {
-      if (childOnlyName && fatherNameC && motherNameC && childOnlyAge && password) {
-        alert(`Child Registered!\nChild: ${childOnlyName}, Age: ${childOnlyAge}\nFather: ${fatherNameC}, Mother: ${motherNameC}`);
-        navigate('/login');
-      } else {
+      if (!childOnlyName || !fatherNameC || !motherNameC || !childOnlyAge || !password) {
         alert('Please fill in all Child fields.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/signup/child', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: childOnlyName,
+            fatherName: fatherNameC,
+            motherName: motherNameC,
+            age: parseInt(childOnlyAge),
+            password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('Child registered successfully!');
+          navigate('/login');
+        } else {
+          alert(`Error: ${data.message || 'Something went wrong!'}`);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to register child. Check console for details.');
       }
     }
+
+    setLoading(false);
   };
 
   return (
@@ -44,37 +101,52 @@ const SignUp = () => {
       <div className="login-card">
         <h2>📝 Sign Up</h2>
 
+        {/* Role Toggle */}
         <div className="role-toggle">
-          <button
-            className={isParent ? '' : 'active'}
-            onClick={() => setIsParent(false)}
-          >
-            Child
-          </button>
           <button
             className={isParent ? 'active' : ''}
             onClick={() => setIsParent(true)}
           >
             Parent
           </button>
+          <button
+            className={!isParent ? 'active' : ''}
+            onClick={() => setIsParent(false)}
+          >
+            Child
+          </button>
         </div>
 
+        {/* Parent Form */}
         {isParent ? (
           <>
-            <label>Father's Name</label>
-            <input
-              type="text"
-              placeholder="Enter father's name"
-              value={fatherNameP}
-              onChange={(e) => setFatherNameP(e.target.value)}
-            />
+            <div className="parent-type-toggle">
+              <label>
+                <input
+                  type="radio"
+                  value="Father"
+                  checked={parentType === 'Father'}
+                  onChange={(e) => setParentType(e.target.value)}
+                />
+                Father
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Mother"
+                  checked={parentType === 'Mother'}
+                  onChange={(e) => setParentType(e.target.value)}
+                />
+                Mother
+              </label>
+            </div>
 
-            <label>Mother's Name</label>
+            <label>{parentType} Name</label>
             <input
               type="text"
-              placeholder="Enter mother's name"
-              value={motherNameP}
-              onChange={(e) => setMotherNameP(e.target.value)}
+              placeholder={`Enter ${parentType.toLowerCase()}'s name`}
+              value={parentName}
+              onChange={(e) => setParentName(e.target.value)}
             />
 
             <label>Child Name</label>
@@ -93,7 +165,7 @@ const SignUp = () => {
               onChange={(e) => setChildAgeP(e.target.value)}
             />
 
-            <label>Set Password</label>
+            <label>Password</label>
             <input
               type="password"
               placeholder="Enter password"
@@ -102,6 +174,7 @@ const SignUp = () => {
             />
           </>
         ) : (
+          // Child Form
           <>
             <label>Child Name</label>
             <input
@@ -135,7 +208,7 @@ const SignUp = () => {
               onChange={(e) => setChildOnlyAge(e.target.value)}
             />
 
-            <label>Set Password</label>
+            <label>Password</label>
             <input
               type="password"
               placeholder="Enter password"
@@ -145,8 +218,12 @@ const SignUp = () => {
           </>
         )}
 
-        <button className="login-btn" onClick={handleRegister}>
-          Register
+        <button
+          className="login-btn"
+          onClick={handleRegister}
+          disabled={loading}
+        >
+          {loading ? 'Registering...' : 'Register'}
         </button>
       </div>
     </div>

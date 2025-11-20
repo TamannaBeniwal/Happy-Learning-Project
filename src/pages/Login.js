@@ -13,34 +13,90 @@ const Login = () => {
   const [childName, setChildName] = useState('');
   const [childAge, setChildAge] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    setLoading(true);
+
     if (isParent) {
-      if (parentName && childNameForParent && password) {
-        setParentInfo({
-          parentType,
-          parentName,
-          childName: childNameForParent,
+      if (!parentName || !childNameForParent || !password) {
+        alert('Please fill in all Parent fields.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/login/parent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: parentType,
+            parentName,
+            childName: childNameForParent,
+            password,
+          }),
         });
-        navigate('/parent');
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setParentInfo({
+            parentType,
+            parentName,
+            childName: childNameForParent,
+            token: data.token || '', // optional if backend returns token
+          });
+          navigate('/parent');
+        } else {
+          alert(`Login failed: ${data.message || 'Invalid credentials'}`);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to login. Check console for details.');
       }
     } else {
-      if (childName && childAge && password) {
-        setChildInfo({ name: childName, age: childAge });
-        navigate('/child');
+      if (!childName || !childAge || !password) {
+        alert('Please fill in all Child fields.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/login/child', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: childName,
+            age: parseInt(childAge),
+            password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setChildInfo({
+            name: childName,
+            age: parseInt(childAge),
+            token: data.token || '', // optional if backend returns token
+          });
+          navigate('/child');
+        } else {
+          alert(`Login failed: ${data.message || 'Invalid credentials'}`);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to login. Check console for details.');
       }
     }
+
+    setLoading(false);
   };
 
-  const handleSignupRedirect = () => {
-    navigate('/signup');
-  };
-
-  const handleForgotPassword = () => {
-    alert('Password recovery coming soon!');
-  };
+  const handleSignupRedirect = () => navigate('/signup');
+  const handleForgotPassword = () => alert('Password recovery coming soon!');
 
   return (
     <div className="login-container">
@@ -132,8 +188,8 @@ const Login = () => {
           </>
         )}
 
-        <button className="login-btn" onClick={handleLogin}>
-          Login
+        <button className="login-btn" onClick={handleLogin} disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
         </button>
 
         <div className="extra-links">

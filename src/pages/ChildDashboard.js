@@ -1,24 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
-import { useNavigate } from 'react-router-dom'; // 👈 Required for navigation
+import { useNavigate } from 'react-router-dom';
 import './ChildDashboard.css';
 
 function ChildDashboard() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate(); // 👈 Hook for navigating programmatically
+  const { user, logout: localLogout } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  // 👇 Handler for clicking a learning card
+
   const goToActivity = (path) => {
     navigate(path);
+  };
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message || 'Logout successful.');
+        localLogout(); 
+        navigate('/login');
+      } else {
+        alert(`Error: ${data.message || 'Logout failed'}`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Logout failed. Check console for details.');
+    }
+    setLoading(false);
   };
 
   return (
     <div className="child-dashboard">
       <button
-        onClick={logout}
+        onClick={handleLogout}
         className="logout-btn"
+        disabled={loading}
       >
-        Logout
+        {loading ? 'Logging out...' : 'Logout'}
       </button>
 
       <h2>🎉 Hello, {user?.name || 'Little Star'}!</h2>
