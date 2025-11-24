@@ -1,23 +1,13 @@
-// import React from 'react';
-
-// function RhymesActivity() {
-//   return (
-//     <div>
-//       <h2>Rhymes & Songs Activity</h2>
-//       <p>Listen and learn rhymes here!</p>
-//     </div>
-//   );
-// }
-
-// export default RhymesActivity;
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 
 function RhymesSongsActivity() {
+  const navigate = useNavigate(); 
+
   const teachers = [
-    { id: 1, name: "Ms. Anita", experience: "5 years", style: "Singing with Actions" },
-    { id: 2, name: "Mr. Kautuk Singh", experience: "6 years", style: "Musical Storytelling" },
-    { id: 3, name: "Mrs. Suhani Mehrotra", experience: "4 years", style: "Interactive Rhymes & Chants" },
+    { id: 1, name: "Ms. Anita", experience: "2 years", style: "Singing with Actions" },
+    { id: 2, name: "Mr. Kautuk Singh", experience: "4 years", style: "Storytelling" },
+    { id: 3, name: "Mrs. Suhani Mehrotra", experience: "2 years", style: "Interactive Rhymes" },
   ];
 
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -26,30 +16,28 @@ function RhymesSongsActivity() {
     setSelectedTeacher(teacher);
   };
 
-  // Only one activity
+  
   const activities = [
     {
       id: 1,
-      title: "🎶 Sing Along Rhymes",
-      description: "Join fun rhymes with singing and actions!",
-      path: "/rhymes/sing-along", // replace with your actual route/file
+      title: "Sing Along Rhymes",
+      description: "Join fun rhymes",
+      path: "/rhymes/sing-rhymes", 
     },
   ];
 
   const handleActivityClick = (activity) => {
-    window.location.href = activity.path; // Navigate to your already-built activity
+    navigate(activity.path); 
   };
 
   return (
     <div className="rhymes-container">
-      <h2 className="rhymes-title">🎵 Rhymes & Songs Adventure 🎤</h2>
-      <p className="rhymes-subtitle">
-        Choose your teacher and enjoy singing along!
-      </p>
+      <h2 className="rhymes-title">Rhymes And Songs</h2>
+      <p className="rhymes-subtitle">Choose your teacher</p>
 
-      {/* 👩‍🏫 Teacher Selection */}
+  
       <div className="teacher-section">
-        <h3 className="section-title">🧑‍🎤 Choose Your Music Teacher (Ages 0–7):</h3>
+        <h3 className="section-title">Choose Your Music Teacher:</h3>
         <div className="teacher-list">
           {teachers.map((teacher) => (
             <div
@@ -58,14 +46,14 @@ function RhymesSongsActivity() {
               className={`teacher-card ${selectedTeacher?.id === teacher.id ? "selected" : ""}`}
             >
               <h4 className="teacher-name">{teacher.name}</h4>
-              <p className="teacher-info">🌟 Experience: {teacher.experience}</p>
-              <p className="teacher-info">🎵 Style: {teacher.style}</p>
+              <p className="teacher-info">Experience: {teacher.experience}</p>
+              <p className="teacher-info">Style: {teacher.style}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Selected Teacher */}
+    
       {selectedTeacher && (
         <div className="selected-box">
           <h3 className="selected-title">You chose:</h3>
@@ -73,14 +61,14 @@ function RhymesSongsActivity() {
           <p className="selected-info">Experience: {selectedTeacher.experience}</p>
           <p className="selected-info">Teaching Style: {selectedTeacher.style}</p>
           <p className="start-text">
-            🎤 Let’s sing with <strong>{selectedTeacher.name.split(" ")[1]}</strong>!
+            Let study with <strong>{selectedTeacher.name.split(" ")[1]}</strong>
           </p>
         </div>
       )}
 
-      {/* Activity Section */}
+
       <div className="activity-section">
-        <h3 className="section-title">🎶 Start Your Activity:</h3>
+        <h3 className="section-title">Start Your Activity:</h3>
         <div className="activity-list">
           {activities.map((activity) => (
             <div
@@ -90,13 +78,13 @@ function RhymesSongsActivity() {
             >
               <h4 className="activity-title">{activity.title}</h4>
               <p className="activity-desc">{activity.description}</p>
-              <button className="start-btn">Start ➡️</button>
+              <button className="start-btn">Start</button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Inline CSS */}
+      
       <style>{`
         .rhymes-container {
           background: linear-gradient(to right, #ffecd2, #fcb69f);
@@ -109,7 +97,6 @@ function RhymesSongsActivity() {
 
         .rhymes-title {
           font-size: 2.4rem;
-          color: #ff4081;
           text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
           margin-bottom: 10px;
         }
@@ -121,7 +108,6 @@ function RhymesSongsActivity() {
 
         .section-title {
           font-size: 1.5rem;
-          color: #4a148c;
           margin-bottom: 20px;
         }
 

@@ -12,6 +12,9 @@ import SignUp from './pages/SignUp';
 import AlphabetActivity from './pages/AlphabetActivity';
 import NumbersActivity from './pages/NumbersActivity';
 import DrawingActivity from './pages/DrawingActivity';
+import FreeDrawing from "./pages/FreeDrawing";
+import SingRhymes from './pages/SingRhymes';
+import ColorShapes from "./pages/ColorShapes";
 import RhymesActivity from './pages/RhymesActivity';
 import CountingBeads from './pages/CountingBeads';
 import NumberHunt from './pages/NumberHunt';
@@ -35,7 +38,10 @@ function App() {
           <Route path="/numbers/counting-beads" element={<CountingBeads />} />
           <Route path="/numbers/number-hunt" element={<NumberHunt />} />
           <Route path="/drawing" element={<DrawingActivity />} />
+          <Route path="/drawing/free-drawing" element={<FreeDrawing />} />
+          <Route path="/drawing/color-shapes" element={<ColorShapes />} />
           <Route path="/rhymes" element={<RhymesActivity />} />
+          <Route path="/rhymes/sing-rhymes" element={<SingRhymes />} />
         </Routes>
       </Router>
     </AuthProvider>
