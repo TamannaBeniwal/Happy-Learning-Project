@@ -13,6 +13,14 @@ import AlphabetActivity from './pages/AlphabetActivity';
 import Flashcards from './pages/Flashcards';
 import DrawAlphabets from './pages/DrawAlphabets';
 import NumbersActivity from './pages/NumbersActivity';
+<<<<<<< HEAD
+=======
+import DrawingActivity from './pages/DrawingActivity';
+import FreeDrawing from "./pages/FreeDrawing";
+import SingRhymes from './pages/SingRhymes';
+import ColorShapes from "./pages/ColorShapes";
+import RhymesActivity from './pages/RhymesActivity';
+>>>>>>> f50959a6d9a98a14eb2045719e99cbdf60ff5362
 import CountingBeads from './pages/CountingBeads';
 import NumberHunt from './pages/NumberHunt';
 import DrawingActivity from './pages/DrawingActivity';
@@ -39,7 +47,10 @@ function App() {
           <Route path="/numbers/counting-beads" element={<CountingBeads />} />
           <Route path="/numbers/number-hunt" element={<NumberHunt />} />
           <Route path="/drawing" element={<DrawingActivity />} />
+          <Route path="/drawing/free-drawing" element={<FreeDrawing />} />
+          <Route path="/drawing/color-shapes" element={<ColorShapes />} />
           <Route path="/rhymes" element={<RhymesActivity />} />
+          <Route path="/rhymes/sing-rhymes" element={<SingRhymes />} />
         </Routes>
       </Router>
     </AuthProvider>
