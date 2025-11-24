@@ -112,7 +112,7 @@ function ChildDashboard() {
   );
 }
 
-// 🌈 Fun & Colorful Inline CSS
+
 const styles = {
   dashboard: {
     background: 'linear-gradient(135deg, #a8edea, #fed6e3)',
@@ -159,7 +159,7 @@ const styles = {
     marginBottom: '40px',
   },
   card: {
-    // background: 'linear-gradient(135deg, #FFD54F, #FFB74D)',
+    
     background:'#DDA0DD',
     borderRadius: '18px',
     padding: '20px 15px',
@@ -193,7 +193,7 @@ const styles = {
     gap: '15px',
   },
   badge: {
-    // background: 'linear-gradient(135deg, #FFECB3, #FFF176)',
+   
     background:'#FFD700',
     borderRadius: '25px',
     padding: '10px 18px',
@@ -212,7 +212,7 @@ const styles = {
     margin: 0,
   },
   recentItem: {
-    // background: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)',
+    
     background:'#D8BFD8',
 
     padding: '10px 15px',

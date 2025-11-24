@@ -10,11 +10,13 @@ import SignUp from './pages/SignUp';
 
 
 import AlphabetActivity from './pages/AlphabetActivity';
+import Flashcards from './pages/Flashcards';
+import DrawAlphabets from './pages/DrawAlphabets';
 import NumbersActivity from './pages/NumbersActivity';
-import DrawingActivity from './pages/DrawingActivity';
-import RhymesActivity from './pages/RhymesActivity';
 import CountingBeads from './pages/CountingBeads';
 import NumberHunt from './pages/NumberHunt';
+import DrawingActivity from './pages/DrawingActivity';
+import RhymesActivity from './pages/RhymesActivity';
 
 import './App.css';
 
@@ -31,6 +33,8 @@ function App() {
 
          
           <Route path="/alphabet" element={<AlphabetActivity />} />
+          <Route path="/alphabet/flashcards" element={<Flashcards />} />
+          <Route path="/alphabet/drawing" element={<DrawAlphabets />} />
           <Route path="/numbers" element={<NumbersActivity />} />
           <Route path="/numbers/counting-beads" element={<CountingBeads />} />
           <Route path="/numbers/number-hunt" element={<NumberHunt />} />

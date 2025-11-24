@@ -67,11 +67,11 @@ function ParentDashboard() {
 >>>>>>> 0c2f2fea00165c2525c35a3a64b3140d7e133915
       </button>
 
-      <h2 className="heading">👩‍👧 Welcome, {parentInfo?.name || 'Parent'}!</h2>
+      <h2 className="heading"> Welcome, {parentInfo?.name || 'Parent'}!</h2>
 
       {/* Child Info */}
       <div className="info-box child-info">
-        <h3 className="title">👶 Child Details</h3>
+        <h3 className="title"> Child Details</h3>
         <p><strong>Name:</strong> {childInfo?.name || 'N/A'}</p>
         <p><strong>Age:</strong> {childInfo?.age || 'N/A'} years</p>
       </div>

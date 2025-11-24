@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ import navigation hook
+import { useNavigate } from 'react-router-dom'; 
 
 function NumbersActivity() {
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate(); 
 
   const teachers = [
-    { id: 1, name: 'Mr. Uday Singh', experience: '6 years', style: 'Playful Counting Songs' },
+    { id: 1, name: 'Mr. Uday Singh', experience: '3 years', style: 'Playful Counting' },
     { id: 2, name: 'Ms. Ojasvi Sharma', experience: '4 years', style: 'Hands-on Math Games' },
-    { id: 3, name: 'Mr. Nitin Verma', experience: '8 years', style: 'Storytelling with Numbers' },
+    { id: 3, name: 'Mr. Nitin Verma', experience: '2 years', style: 'Storytelling with Numbers' },
   ];
 
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -19,33 +19,31 @@ function NumbersActivity() {
   const activities = [
     {
       id: 1,
-      title: '🔵 Counting Beads',
+      title: ' Counting Beads',
       description: 'Move colorful beads to count numbers from 1–5.',
       path: '/numbers/counting-beads',
     },
     {
       id: 2,
-      title: '🔢 Number Hunt',
+      title: ' Number Hunt',
       description: 'Find and click the matching number in a fun grid!',
       path: '/numbers/number-hunt',
     },
   ];
 
-  // ✅ Updated function to navigate instead of alert
+  
   const handleActivityClick = (activity) => {
     navigate(activity.path);
   };
 
   return (
     <div className="numbers-container">
-      <h2 className="numbers-title">🎯 Numbers Learning Adventure 🔢</h2>
-      <p className="numbers-subtitle">
-        Let’s explore numbers together! Choose your teacher and start the fun.
-      </p>
+      <h2 className="numbers-title"> Numbers Learning Adventure </h2>
+      
 
-      {/* 👩‍🏫 Teacher Selection */}
+      
       <div className="teacher-section">
-        <h3 className="section-title">👨‍🏫 Choose Your Number Teacher (Ages 0–7):</h3>
+        <h3 className="section-title"> Choose Your Teacher:</h3>
         <div className="teacher-list">
           {teachers.map((teacher) => (
             <div
@@ -56,14 +54,14 @@ function NumbersActivity() {
               }`}
             >
               <h4 className="teacher-name">{teacher.name}</h4>
-              <p className="teacher-info">🌟 Experience: {teacher.experience}</p>
-              <p className="teacher-info">🎨 Style: {teacher.style}</p>
+              <p className="teacher-info">Experience: {teacher.experience}</p>
+              <p className="teacher-info">Style: {teacher.style}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 🧮 Selected Teacher */}
+      
       {selectedTeacher && (
         <div className="selected-box">
           <h3 className="selected-title">You chose:</h3>
@@ -71,14 +69,14 @@ function NumbersActivity() {
           <p className="selected-info">Experience: {selectedTeacher.experience}</p>
           <p className="selected-info">Teaching Style: {selectedTeacher.style}</p>
           <p className="start-text">
-            🚀 Let’s start learning numbers with <strong>{selectedTeacher.name.split(' ')[1]}</strong>!
+             Let start learning
           </p>
         </div>
       )}
 
-      {/* 🎲 Activities Section */}
+      
       <div className="activity-section">
-        <h3 className="section-title">🎮 Choose Your Activity:</h3>
+        <h3 className="section-title">Choose Your Activity:</h3>
         <div className="activity-list">
           {activities.map((activity) => (
             <div
@@ -88,13 +86,13 @@ function NumbersActivity() {
             >
               <h4 className="activity-title">{activity.title}</h4>
               <p className="activity-desc">{activity.description}</p>
-              <button className="start-btn">Start ➡️</button>
+              <button className="start-btn">Start </button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Inline CSS (same as before) */}
+      
       <style>{`
         .numbers-container {
           background: linear-gradient(to right, #c2e9fb, #e2fcfd);
@@ -106,7 +104,6 @@ function NumbersActivity() {
         }
         .numbers-title {
           font-size: 2.4rem;
-          color: #ff4081;
           text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
           margin-bottom: 10px;
         }
@@ -116,7 +113,6 @@ function NumbersActivity() {
         }
         .section-title {
           font-size: 1.5rem;
-          color: #4a148c;
           margin-bottom: 20px;
         }
         .teacher-section {
@@ -140,7 +136,7 @@ function NumbersActivity() {
           box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
           cursor: pointer;
           transition: all 0.3s ease;
-          color: #333;
+  
         }
         .teacher-card.selected {
           border: 3px solid #ffd700;
